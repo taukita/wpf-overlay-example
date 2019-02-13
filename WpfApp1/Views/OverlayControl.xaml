@@ -8,6 +8,16 @@
              d:DataContext="{d:DesignInstance Type=viewModels:OverlayViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="300">
 	<DockPanel>
+		<DockPanel.Style>
+			<Style TargetType="DockPanel">
+				<Setter Property="Visibility" Value="Collapsed"/>
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IsShown}" Value="True">
+						<Setter Property="Visibility" Value="Visible"/>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+		</DockPanel.Style>
 		<ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
 			<ItemsControl ItemsSource="{Binding Items}">
 				<ItemsControl.ItemsPanel>
