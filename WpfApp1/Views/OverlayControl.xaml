@@ -27,7 +27,7 @@
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<CheckBox>
+						<CheckBox IsChecked="{Binding Flag}">
 							<TextBlock Text="{Binding Title}"/>
 						</CheckBox>
 					</DataTemplate>

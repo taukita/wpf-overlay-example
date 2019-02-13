@@ -6,7 +6,7 @@
 	{
 		public MainViewModel()
 		{
-			Overlay = new OverlayViewModel(20);
+			Overlay = new OverlayViewModel(2);
 		}
 
 		public OverlayViewModel Overlay { get; }
