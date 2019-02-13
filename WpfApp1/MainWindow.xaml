@@ -1,0 +1,49 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:viewModels="clr-namespace:WpfApp1.ViewModels"
+        xmlns:views="clr-namespace:WpfApp1.Views"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="350" Width="525">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Button Command="{Binding ToggleOverlay}" Margin="5">Переключить оверлей</Button>
+		</Grid>
+		<TextBlock Grid.Row="1" TextWrapping="Wrap" Margin="5">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a facilisis enim. Donec tempor, felis vitae sagittis gravida, nisl massa porta turpis, sed finibus elit tortor at nibh. Morbi pulvinar id lacus et semper. Sed mollis diam ac mattis ultricies. Vestibulum eget mollis erat, id scelerisque eros. Nullam posuere sollicitudin lacus, venenatis egestas lorem commodo a. Vestibulum feugiat luctus leo, ut imperdiet turpis efficitur sit amet. Praesent posuere ligula justo, in dictum elit eleifend eu.
+
+Duis tempor augue sed nisl rhoncus, vitae mollis eros consectetur. Sed vitae fringilla mi, nec finibus nulla. Fusce ullamcorper non est sit amet sollicitudin. Proin pellentesque volutpat pretium. Ut aliquam quam non congue pellentesque. Donec sit amet felis sagittis, euismod justo eget, sollicitudin tellus. Integer congue ut dolor ac egestas. Etiam pharetra eu odio in mattis. Morbi id odio egestas, vehicula nibh eget, iaculis nibh. Integer in orci non orci euismod dapibus.
+
+Fusce convallis commodo lorem. Maecenas a elementum felis, dignissim elementum enim. Nunc sed sagittis libero, at condimentum sem. Integer in est pulvinar, vestibulum sem sit amet, pharetra diam. Mauris vel nisi pretium, viverra leo vel, pellentesque turpis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas laoreet mollis quam ut venenatis.
+
+Duis a malesuada sem, ut euismod ex. Ut est nunc, tristique non venenatis in, consequat eu ex. Aliquam sagittis pulvinar arcu. Quisque eget mattis erat, vel facilisis est. Phasellus lobortis elementum tincidunt. Aenean eu ullamcorper tellus. Praesent laoreet egestas elit, lacinia iaculis metus vulputate quis. Nunc non elit non ex pulvinar mattis.
+
+Nulla erat lorem, commodo at magna eget, pretium porta sem. Mauris viverra tellus tempus, aliquet eros ut, accumsan felis. Maecenas in velit et quam sagittis accumsan vitae nec turpis. Morbi porttitor ac leo eu feugiat. Cras a diam et tortor maximus vestibulum aliquam egestas diam. Aenean porta at turpis vel efficitur. Nam felis libero, faucibus sed ullamcorper vitae, tincidunt et nisl. Nam cursus metus non risus tincidunt porttitor. Suspendisse ac accumsan arcu, nec feugiat nisi. Ut pharetra purus lectus, eu sodales justo interdum et. Phasellus lobortis, magna vel sagittis sollicitudin, ipsum odio vulputate mi, sit amet mattis enim velit quis lectus. Maecenas suscipit, odio eget facilisis convallis, libero tellus vehicula lectus, quis ornare justo dolor nec felis. Ut at urna posuere, faucibus quam nec, ultricies tortor. In lacinia consectetur felis vel tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+		</TextBlock>
+		<Border Grid.Row="1">
+			<Border.Style>
+				<Style TargetType="Border">
+					<Setter Property="Visibility" Value="Collapsed"/>
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding IsOverlayShown}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Border.Style>
+			<views:OverlayControl DataContext="{Binding Overlay}"/>
+		</Border>
+	</Grid>
+</Window>
