@@ -4,10 +4,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:WpfApp1.ViewModels"
+             xmlns:converters="clr-namespace:WpfApp1.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModels:OverlayViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="300">
-	<DockPanel>
+	<DockPanel ClipToBounds="True">
 		<DockPanel.Style>
 			<Style TargetType="DockPanel">
 				<Setter Property="Visibility" Value="Collapsed"/>
@@ -15,10 +17,67 @@
 					<DataTrigger Binding="{Binding IsShown}" Value="True">
 						<Setter Property="Visibility" Value="Visible"/>
 					</DataTrigger>
+					<DataTrigger Binding="{Binding IsShown}" Value="False">
+						<DataTrigger.EnterActions>
+							<BeginStoryboard Name="DockPanelIsShownFalseStoryboard">
+								<Storyboard>
+									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Duration="0:0:0.5">
+										<DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+										<DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Collapsed}"/>
+									</ObjectAnimationUsingKeyFrames>
+								</Storyboard>
+							</BeginStoryboard>
+						</DataTrigger.EnterActions>
+						<DataTrigger.ExitActions>
+							<RemoveStoryboard BeginStoryboardName="DockPanelIsShownFalseStoryboard"/>
+						</DataTrigger.ExitActions>
+					</DataTrigger>
 				</Style.Triggers>
 			</Style>
 		</DockPanel.Style>
-		<ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+		<ScrollViewer DockPanel.Dock="Top" 
+		              VerticalScrollBarVisibility="Auto">
+			<ScrollViewer.Tag>
+				<system:Double>1.0</system:Double>
+			</ScrollViewer.Tag>
+			<ScrollViewer.Margin>
+				<MultiBinding Converter="{converters:HeightToMarginConverter}">
+					<Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"></Binding>
+					<Binding Path="Tag" RelativeSource="{RelativeSource Self}"></Binding>
+				</MultiBinding>
+			</ScrollViewer.Margin>
+			<ScrollViewer.Style>
+				<Style TargetType="ScrollViewer">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding IsShown}" Value="True">
+							<DataTrigger.EnterActions>
+								<RemoveStoryboard BeginStoryboardName="IsShownFalseStoryboard"/>
+								<BeginStoryboard Name="IsShownTrueStoryboard">
+									<Storyboard>
+										<DoubleAnimation
+											Storyboard.TargetProperty="Tag"
+											To="0.0"
+											Duration="0:0:0.5"/>
+									</Storyboard>
+								</BeginStoryboard>
+							</DataTrigger.EnterActions>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding IsShown}" Value="False">
+							<DataTrigger.EnterActions>
+								<RemoveStoryboard BeginStoryboardName="IsShownTrueStoryboard"/>
+								<BeginStoryboard Name="IsShownFalseStoryboard">
+									<Storyboard>
+										<DoubleAnimation
+											Storyboard.TargetProperty="Tag"
+											To="1.0"
+											Duration="0:0:0.5"/>
+									</Storyboard>
+								</BeginStoryboard>
+							</DataTrigger.EnterActions>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</ScrollViewer.Style>
 			<ItemsControl ItemsSource="{Binding Items}">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
@@ -27,8 +86,16 @@
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<CheckBox IsChecked="{Binding Flag}">
-							<TextBlock Text="{Binding Title}"/>
+						<CheckBox IsChecked="{Binding Flag}" HorizontalContentAlignment="Stretch">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="Auto" SharedSizeGroup="NumberGroup"/>
+									<ColumnDefinition Width="16"/>
+								</Grid.ColumnDefinitions>
+								<TextBlock Text="{Binding Title}"/>
+								<TextBlock Grid.Column="1" Text="{Binding Number}"/>
+							</Grid>
 						</CheckBox>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
@@ -39,6 +106,32 @@
 			<Border.InputBindings>
 				<MouseBinding MouseAction="LeftClick" Command="{Binding Hide}"/>
 			</Border.InputBindings>
+			<Border.Style>
+				<Style TargetType="Border">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding IsShown}" Value="True">
+							<DataTrigger.EnterActions>
+								<RemoveStoryboard BeginStoryboardName="BorderIsShownFalseStoryboard"/>
+								<BeginStoryboard Name="BorderIsShownTrueStoryboard">
+									<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+										<ColorAnimation From="White" To="Gray" Duration="0:0:0.5"/>
+									</Storyboard>
+								</BeginStoryboard>
+							</DataTrigger.EnterActions>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding IsShown}" Value="False">
+							<DataTrigger.EnterActions>
+								<RemoveStoryboard BeginStoryboardName="BorderIsShownTrueStoryboard"/>
+								<BeginStoryboard Name="BorderIsShownFalseStoryboard">
+									<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+										<ColorAnimation From="Gray" To="White" Duration="0:0:0.5"/>
+									</Storyboard>
+								</BeginStoryboard>
+							</DataTrigger.EnterActions>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Border.Style>
 		</Border>
 	</DockPanel>
 </UserControl>

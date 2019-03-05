@@ -10,7 +10,7 @@
 	internal class OverlayViewModel : BindableBase
 	{
 		private readonly OverlayItemViewModel _allItem;
-		private bool _isShown;
+		private bool? _isShown;
 
 		public OverlayViewModel()
 			: this(0)
@@ -25,21 +25,23 @@
 			Items.Add(_allItem);
 			_allItem.PropertyChanged += AllItemOnPropertyChanged;
 
-			AddItem(new OverlayItemViewModel("Первый элемент"));
-			AddItem(new OverlayItemViewModel("Второй элемент"));
-			AddItem(new OverlayItemViewModel("Третий элемент"));
+			AddItem(new OverlayItemViewModel("Первый элемент") {Number = 118});
+			AddItem(new OverlayItemViewModel("Второй элемент") {Number = 45});
+			AddItem(new OverlayItemViewModel("Третий элемент") {Number = 1099});
 			for (var i = 0; i < n; i++)
 			{
-				AddItem(new OverlayItemViewModel($"Элемент №{i + 3}"));
+				AddItem(new OverlayItemViewModel($"Элемент №{i + 4}") {Number = i + 4});
 			}
 
+			_allItem.Number = Items.Skip(1).Sum(i => i.Number);
+
 			Hide = new DelegateCommand(() => IsShown = false);
-			Toggle = new DelegateCommand(() => IsShown = !IsShown);
+			Toggle = new DelegateCommand(() => IsShown = IsShown != true);
 		}
 
 		public ICommand Hide { get; }
 
-		public bool IsShown
+		public bool? IsShown
 		{
 			get => _isShown;
 			set => SetProperty(ref _isShown, value);

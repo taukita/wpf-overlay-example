@@ -32,16 +32,6 @@ Duis a malesuada sem, ut euismod ex. Ut est nunc, tristique non venenatis in, co
 Nulla erat lorem, commodo at magna eget, pretium porta sem. Mauris viverra tellus tempus, aliquet eros ut, accumsan felis. Maecenas in velit et quam sagittis accumsan vitae nec turpis. Morbi porttitor ac leo eu feugiat. Cras a diam et tortor maximus vestibulum aliquam egestas diam. Aenean porta at turpis vel efficitur. Nam felis libero, faucibus sed ullamcorper vitae, tincidunt et nisl. Nam cursus metus non risus tincidunt porttitor. Suspendisse ac accumsan arcu, nec feugiat nisi. Ut pharetra purus lectus, eu sodales justo interdum et. Phasellus lobortis, magna vel sagittis sollicitudin, ipsum odio vulputate mi, sit amet mattis enim velit quis lectus. Maecenas suscipit, odio eget facilisis convallis, libero tellus vehicula lectus, quis ornare justo dolor nec felis. Ut at urna posuere, faucibus quam nec, ultricies tortor. In lacinia consectetur felis vel tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 		</TextBlock>
 		<Border Grid.Row="1">
-			<Border.Style>
-				<Style TargetType="Border">
-					<Setter Property="Visibility" Value="Collapsed"/>
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding Overlay.IsShown}" Value="True">
-							<Setter Property="Visibility" Value="Visible"/>
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</Border.Style>
 			<views:OverlayControl DataContext="{Binding Overlay}"/>
 		</Border>
 	</Grid>
