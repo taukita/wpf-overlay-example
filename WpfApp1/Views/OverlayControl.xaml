@@ -51,7 +51,6 @@
 					<Style.Triggers>
 						<DataTrigger Binding="{Binding IsShown}" Value="True">
 							<DataTrigger.EnterActions>
-								<RemoveStoryboard BeginStoryboardName="IsShownFalseStoryboard"/>
 								<BeginStoryboard Name="IsShownTrueStoryboard">
 									<Storyboard>
 										<DoubleAnimation
@@ -61,10 +60,12 @@
 									</Storyboard>
 								</BeginStoryboard>
 							</DataTrigger.EnterActions>
+							<DataTrigger.ExitActions>
+								<RemoveStoryboard BeginStoryboardName="IsShownTrueStoryboard"/>
+							</DataTrigger.ExitActions>
 						</DataTrigger>
 						<DataTrigger Binding="{Binding IsShown}" Value="False">
 							<DataTrigger.EnterActions>
-								<RemoveStoryboard BeginStoryboardName="IsShownTrueStoryboard"/>
 								<BeginStoryboard Name="IsShownFalseStoryboard">
 									<Storyboard>
 										<DoubleAnimation
@@ -74,6 +75,9 @@
 									</Storyboard>
 								</BeginStoryboard>
 							</DataTrigger.EnterActions>
+							<DataTrigger.ExitActions>
+								<RemoveStoryboard BeginStoryboardName="IsShownFalseStoryboard"/>
+							</DataTrigger.ExitActions>
 						</DataTrigger>
 					</Style.Triggers>
 				</Style>
@@ -111,23 +115,27 @@
 					<Style.Triggers>
 						<DataTrigger Binding="{Binding IsShown}" Value="True">
 							<DataTrigger.EnterActions>
-								<RemoveStoryboard BeginStoryboardName="BorderIsShownFalseStoryboard"/>
 								<BeginStoryboard Name="BorderIsShownTrueStoryboard">
 									<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
 										<ColorAnimation From="White" To="Gray" Duration="0:0:0.5"/>
 									</Storyboard>
 								</BeginStoryboard>
 							</DataTrigger.EnterActions>
+							<DataTrigger.ExitActions>
+								<RemoveStoryboard BeginStoryboardName="BorderIsShownTrueStoryboard"/>
+							</DataTrigger.ExitActions>
 						</DataTrigger>
 						<DataTrigger Binding="{Binding IsShown}" Value="False">
 							<DataTrigger.EnterActions>
-								<RemoveStoryboard BeginStoryboardName="BorderIsShownTrueStoryboard"/>
 								<BeginStoryboard Name="BorderIsShownFalseStoryboard">
 									<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
 										<ColorAnimation From="Gray" To="White" Duration="0:0:0.5"/>
 									</Storyboard>
 								</BeginStoryboard>
 							</DataTrigger.EnterActions>
+							<DataTrigger.ExitActions>
+								<RemoveStoryboard BeginStoryboardName="BorderIsShownFalseStoryboard"/>
+							</DataTrigger.ExitActions>
 						</DataTrigger>
 					</Style.Triggers>
 				</Style>
