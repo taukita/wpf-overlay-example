@@ -6,6 +6,7 @@
              xmlns:viewModels="clr-namespace:WpfApp1.ViewModels"
              xmlns:converters="clr-namespace:WpfApp1.Converters"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:services="clr-namespace:WpfApp1.Services"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModels:OverlayViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -97,7 +98,17 @@
 									<ColumnDefinition Width="Auto" SharedSizeGroup="NumberGroup"/>
 									<ColumnDefinition Width="16"/>
 								</Grid.ColumnDefinitions>
-								<TextBlock Text="{Binding Title}"/>
+								<TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis">
+									<TextBlock.Style>
+										<Style TargetType="TextBlock">
+											<Style.Triggers>
+												<Trigger Property="services:TextBlockService.IsTextTrimmed" Value="True">
+													<Setter Property="ToolTip" Value="{Binding Title}"></Setter>
+												</Trigger>
+											</Style.Triggers>
+										</Style>
+									</TextBlock.Style>
+								</TextBlock>
 								<TextBlock Grid.Column="1" Text="{Binding Number}"/>
 							</Grid>
 						</CheckBox>

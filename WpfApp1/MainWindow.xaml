@@ -18,9 +18,9 @@
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<Button Command="{Binding Overlay.Toggle}" Margin="5">Переключить оверлей</Button>
+			<Button Command="{Binding Overlay.Toggle}" Margin="5" ToolTip="Кнопка">Переключить оверлей</Button>
 		</Grid>
-		<TextBlock Grid.Row="1" TextWrapping="Wrap" Margin="5">
+		<TextBlock Grid.Row="1" TextWrapping="Wrap" Margin="5" ToolTip="Lorem ipsum">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a facilisis enim. Donec tempor, felis vitae sagittis gravida, nisl massa porta turpis, sed finibus elit tortor at nibh. Morbi pulvinar id lacus et semper. Sed mollis diam ac mattis ultricies. Vestibulum eget mollis erat, id scelerisque eros. Nullam posuere sollicitudin lacus, venenatis egestas lorem commodo a. Vestibulum feugiat luctus leo, ut imperdiet turpis efficitur sit amet. Praesent posuere ligula justo, in dictum elit eleifend eu.
 
 Duis tempor augue sed nisl rhoncus, vitae mollis eros consectetur. Sed vitae fringilla mi, nec finibus nulla. Fusce ullamcorper non est sit amet sollicitudin. Proin pellentesque volutpat pretium. Ut aliquam quam non congue pellentesque. Donec sit amet felis sagittis, euismod justo eget, sollicitudin tellus. Integer congue ut dolor ac egestas. Etiam pharetra eu odio in mattis. Morbi id odio egestas, vehicula nibh eget, iaculis nibh. Integer in orci non orci euismod dapibus.
