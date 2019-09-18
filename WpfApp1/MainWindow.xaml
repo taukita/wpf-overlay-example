@@ -12,6 +12,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -34,5 +35,6 @@ Nulla erat lorem, commodo at magna eget, pretium porta sem. Mauris viverra tellu
 		<Border Grid.Row="1">
 			<views:OverlayControl DataContext="{Binding Overlay}"/>
 		</Border>
+		<views:TestControl Grid.Row="2" DataContext="{Binding Test}"/>
 	</Grid>
 </Window>

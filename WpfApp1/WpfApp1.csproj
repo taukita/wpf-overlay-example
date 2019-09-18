@@ -67,13 +67,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\HeightLimiter.cs" />
     <Compile Include="Converters\HeightToMarginConverter.cs" />
     <Compile Include="Services\TextBlockService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\OverlayItemViewModel.cs" />
     <Compile Include="ViewModels\OverlayViewModel.cs" />
+    <Compile Include="ViewModels\TestViewModel.cs" />
     <Compile Include="Views\OverlayControl.xaml.cs">
       <DependentUpon>OverlayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestControl.xaml.cs">
+      <DependentUpon>TestControl.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -88,6 +93,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\OverlayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

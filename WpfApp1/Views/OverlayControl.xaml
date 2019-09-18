@@ -10,6 +10,60 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModels:OverlayViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="300">
+	<UserControl.Resources>
+		<Style x:Key="CircleButton" TargetType="Button">
+			<Setter Property="OverridesDefaultStyle" Value="True"/>
+			<Setter Property="Margin" Value="2"/>
+			<Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}"/>
+			<Setter Property="Background" Value="#FF6DB4EF"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<Ellipse Fill="{TemplateBinding Background}"/>
+							<Ellipse>
+								<Ellipse.Fill>
+									<RadialGradientBrush>
+										<GradientStop Offset="0" Color="#00000000"/>
+										<GradientStop Offset="0.88" Color="#00000000"/>
+										<GradientStop Offset="1" Color="#80000000"/>
+									</RadialGradientBrush>
+								</Ellipse.Fill>
+							</Ellipse>
+							<Ellipse Margin="10" x:Name="highlightCircle" >
+								<Ellipse.Fill >
+									<LinearGradientBrush >
+										<GradientStop Offset="0" Color="#50FFFFFF"/>
+										<GradientStop Offset="0.5" Color="#00FFFFFF"/>
+										<GradientStop Offset="1" Color="#50FFFFFF"/>
+									</LinearGradientBrush>
+								</Ellipse.Fill>
+							</Ellipse>
+							<ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsPressed" Value="True">
+								<Setter TargetName="highlightCircle" Property="Fill">
+									<Setter.Value>
+										<LinearGradientBrush StartPoint="0.3,0" EndPoint="0.7,1">
+											<GradientStop Offset="0" Color="#50FFFFFF"/>
+											<GradientStop Offset="0.5" Color="#00FFFFFF"/>
+											<GradientStop Offset="1" Color="#50FFFFFF"/>
+										</LinearGradientBrush>
+									</Setter.Value>
+								</Setter>
+								<Setter TargetName="content" Property="RenderTransform">
+									<Setter.Value>
+										<TranslateTransform Y="0.5" X="0.5"/>
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
 	<DockPanel ClipToBounds="True">
 		<DockPanel.Style>
 			<Style TargetType="DockPanel">
@@ -37,7 +91,8 @@
 			</Style>
 		</DockPanel.Style>
 		<ScrollViewer DockPanel.Dock="Top" 
-		              VerticalScrollBarVisibility="Auto">
+		              VerticalScrollBarVisibility="Auto"
+		              MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type DockPanel}}, Converter={converters:HeightLimiter}}">
 			<ScrollViewer.Tag>
 				<system:Double>1.0</system:Double>
 			</ScrollViewer.Tag>
@@ -117,40 +172,62 @@
 			</ItemsControl>
 		</ScrollViewer>
 
-		<Border Background="Gray" Opacity="0.8">
-			<Border.InputBindings>
-				<MouseBinding MouseAction="LeftClick" Command="{Binding Hide}"/>
-			</Border.InputBindings>
-			<Border.Style>
-				<Style TargetType="Border">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding IsShown}" Value="True">
-							<DataTrigger.EnterActions>
-								<BeginStoryboard Name="BorderIsShownTrueStoryboard">
-									<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-										<ColorAnimation From="White" To="Gray" Duration="0:0:0.5"/>
-									</Storyboard>
-								</BeginStoryboard>
-							</DataTrigger.EnterActions>
-							<DataTrigger.ExitActions>
-								<RemoveStoryboard BeginStoryboardName="BorderIsShownTrueStoryboard"/>
-							</DataTrigger.ExitActions>
-						</DataTrigger>
-						<DataTrigger Binding="{Binding IsShown}" Value="False">
-							<DataTrigger.EnterActions>
-								<BeginStoryboard Name="BorderIsShownFalseStoryboard">
-									<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-										<ColorAnimation From="Gray" To="White" Duration="0:0:0.5"/>
-									</Storyboard>
-								</BeginStoryboard>
-							</DataTrigger.EnterActions>
-							<DataTrigger.ExitActions>
-								<RemoveStoryboard BeginStoryboardName="BorderIsShownFalseStoryboard"/>
-							</DataTrigger.ExitActions>
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</Border.Style>
+		<Border>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Border Background="Gray" 
+				        Opacity="0.8"
+				        Grid.RowSpan="2"
+				        Grid.ColumnSpan="3">
+					<Border.InputBindings>
+						<MouseBinding MouseAction="LeftClick" Command="{Binding Hide}"/>
+					</Border.InputBindings>
+					<Border.Style>
+						<Style TargetType="Border">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding IsShown}" Value="True">
+									<DataTrigger.EnterActions>
+										<BeginStoryboard Name="BorderIsShownTrueStoryboard">
+											<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+												<ColorAnimation From="White" To="Gray" Duration="0:0:0.5"/>
+											</Storyboard>
+										</BeginStoryboard>
+									</DataTrigger.EnterActions>
+									<DataTrigger.ExitActions>
+										<RemoveStoryboard BeginStoryboardName="BorderIsShownTrueStoryboard"/>
+									</DataTrigger.ExitActions>
+								</DataTrigger>
+								<DataTrigger Binding="{Binding IsShown}" Value="False">
+									<DataTrigger.EnterActions>
+										<BeginStoryboard Name="BorderIsShownFalseStoryboard">
+											<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+												<ColorAnimation From="Gray" To="White" Duration="0:0:0.5"/>
+											</Storyboard>
+										</BeginStoryboard>
+									</DataTrigger.EnterActions>
+									<DataTrigger.ExitActions>
+										<RemoveStoryboard BeginStoryboardName="BorderIsShownFalseStoryboard"/>
+									</DataTrigger.ExitActions>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Border.Style>
+				</Border>
+				<Button Grid.Row="0"
+						Grid.Column="1"
+				        Margin="0,-10,0,0"
+				        Width="20"
+				        Height="20" 
+				        Style="{StaticResource CircleButton}" Background="AliceBlue">^</Button>
+			</Grid>
 		</Border>
 	</DockPanel>
 </UserControl>
